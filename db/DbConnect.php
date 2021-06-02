@@ -1,21 +1,34 @@
-<?php
-include '../db_config.php';
+<?php 
+include ('../Config.php');
+class DbConnect
+{
+    private $con;
+ 
+    function __construct()  
+    {
 
-class DBConnect{
-	private $conn;
-	function connect(){
-		$this->conn = new mysqli(DB_SERVER,DB_USER,DB_PASSWORD,DB_DATABASE);
-		if ($this->conn->connect_error) {
-			die("Connection failed: " . $this->conn->connect_error);
-		}
-	}
-	function query($sql){
+    }
+ 
+    function connect()
+    {
+ 
+        $this->con = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
+ 
+        if (mysqli_connect_errno()) {
+            echo "Failed to connect to MySQL: " . mysqli_connect_error();
+        }
+ 
+        return $this->con;
+    }
+
+    function query($sql){
 		$result = $this->conn->query($sql);
 		if ( $result=== FALSE) {
 			echo "Error: " . $sql . "<br>" . $this->conn->error;
 		} 
 		return  $result;
 	}
+	
 	function multi_query($sql)
 	{
 		$result = $this->conn->multi_query($sql);
@@ -23,24 +36,29 @@ class DBConnect{
 			echo "Error: " . $sql . "<br>" . $this->conn->error;
 		}
 		return  $result;
+		
 	}
+	
 	function select($sql){
 		$result = $this->conn->query($sql);
 		$data = array();
-		if ($result->num_rows > 0) {
+		if ($result !== false && $result->num_rows > 0) {
 			while($row = $result->fetch_assoc()) {
 				array_push($data,$row);
 			}
 		} 
 		return  $data;
 	}
-	// function insert($sql){
-	// 	$this->connect();
-	// 	$result = $this->conn->query($sql);
-	// 	echo ($result);
-	// }
+
+	function select_one($sql){
+		$result = $this->conn->query($sql);
+		$row = $result->fetch_assoc();
+		return $row;
+	}
+
+	
 	function close(){
 		mysqli_close($this->conn);
 	}
+ 
 }
-?>
