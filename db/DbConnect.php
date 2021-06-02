@@ -42,6 +42,5 @@ class DBConnect{
 	function close(){
 		mysqli_close($this->conn);
 	}
-	//abc123
 }
 ?>
