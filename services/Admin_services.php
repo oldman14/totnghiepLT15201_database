@@ -14,8 +14,16 @@ class Admin{
         if(!$this->check($username, $password)){
             return false;
         }else{
-            return $this->db->query("UPDATE admin SET TOKEN = '$token' WHERE Username = '$username'");
+            return $this->db->query("UPDATE admin SET Token = '$token' WHERE Username = '$username'");
         }  
+    }
+
+    function changePass($username,$password,$newPass){
+        if(!$this->check($username, $password)){
+            return false;
+        }else{
+            return $this->db->query("UPDATE admin SET Password = '$newPass' WHERE Username = '$username'");
+        }
     }
 
     private function check($username, $password){
