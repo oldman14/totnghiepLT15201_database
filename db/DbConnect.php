@@ -2,7 +2,7 @@
 include ('../Config.php');
 class DbConnect
 {
-    private $con;
+    private $conn;
  
     function __construct()  
     {
@@ -12,13 +12,13 @@ class DbConnect
     function connect()
     {
  
-        $this->con = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        $this->conn = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
  
         if (mysqli_connect_errno()) {
             echo "Failed to connect to MySQL: " . mysqli_connect_error();
         }
  
-        return $this->con;
+        return $this->conn;
     }
 
     function query($sql){

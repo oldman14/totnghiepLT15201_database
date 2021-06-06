@@ -28,7 +28,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 
 		$mPushNotification = $push->getPush(); 
 
-		$devicetoken = $db->getTokenByEmail($_POST['phone']);
+		$devicetoken = $db->getTokenByPhone($_POST['phone']);
 
 		$firebase = new Firebase(); 
 

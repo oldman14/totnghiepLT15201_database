@@ -5,51 +5,34 @@ include ('../db/DbConnect.php');
 class DbOperation
 {
 
-    private $con;
+    private $conn;
 
     function __construct()
     {
         $db = new DbConnect();
-
-        $this->con = $db->connect();
+        $this->conn = $db->connect();
     }
 
-    public function registerDevice($phone, $pass,$token){
-        if(!$this->isEmailExist($phone)){
-            $stmt = $this->con->prepare("INSERT INTO users (phone, pass, token) VALUES (?,?,?) ");
-            $stmt->bind_param("sss",$phone, $pass,$token);
+
+
+    public function loginRegisDevice($phone,$token){
+        if(!$this->isPhoneExist($phone)){
+            $stmt = $this->conn->prepare("INSERT INTO user (UserPhone, Token,UserImage) VALUES (?,?,'https://assets.webiconspng.com/uploads/2017/09/Avatar-PNG-Image-87443.png')");
+            $stmt->bind_param("ss",$phone,$token);
             if($stmt->execute())
                 return 0; 
             return 1; 
         }else{
-            return 2;
-        }
-    }
-
-    private function checklogin($phone,$pass){
-        $stmt = $this->con->prepare("SELECT * FROM users WHERE phone = ? AND pass =?");
-        $stmt->bind_param("ss",$phone,$pass);
-        $stmt->execute();
-        $stmt->store_result();
-        $num_rows = $stmt->num_rows;
-        $stmt->close();
-        return $num_rows > 0;
-    }
-
-    public function loginDevice($phone, $pass, $token){
-        if($this->checklogin($phone, $pass)){
-            $stmt = $this->con->prepare("UPDATE users SET token = ? WHERE phone = ? AND pass = ? ");
-            $stmt->bind_param("sss",$token, $phone,$pass);
+            $stmt = $this->conn->prepare("UPDATE user SET Token = ? WHERE UserPhone = ?");
+            $stmt->bind_param("ss",$token,$phone);
             if($stmt->execute())
-                return 0;
-            return 1; 
-        }else{
-            return 2;
+                return 2; 
+            return 3; 
         }
     }
 
-    private function isEmailexist($phone){
-        $stmt = $this->con->prepare("SELECT userId FROM users WHERE phone = ?");
+    private function isPhoneExist($phone){
+        $stmt = $this->conn->prepare("SELECT UserID FROM user WHERE UserPhone = ?");
         $stmt->bind_param("s",$phone);
         $stmt->execute();
         $stmt->store_result();
@@ -60,7 +43,7 @@ class DbOperation
 
 
     public function getAllTokens(){
-        $stmt = $this->con->prepare("SELECT token FROM users");
+        $stmt = $this->conn->prepare("SELECT token FROM users");
         $stmt->execute(); 
         $result = $stmt->get_result();
         $tokens = array(); 
@@ -70,23 +53,16 @@ class DbOperation
         return $tokens; 
     }
 
-    public function getTokenByEmail($phone){
-        $stmt = $this->con->prepare("SELECT token FROM users WHERE phone = ?");
+    public function getTokenByPhone($phone){
+        $stmt = $this->conn->prepare("SELECT Token FROM user WHERE UserPhone = ?");
         $stmt->bind_param("s",$phone);
         $stmt->execute(); 
         $result = $stmt->get_result()->fetch_assoc();
-        return array($result['token']);        
+        return array($result['Token']);        
     }
 
-    public function getAllDevices(){
-        $stmt = $this->con->prepare("SELECT * FROM users");
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result; 
-    }
-
-    public function getuser($phone){
-        $stmt = $this->con->prepare("SELECT * FROM users WHERE phone = ?");
+    public function getUser($phone){
+        $stmt = $this->conn->prepare("SELECT * FROM user WHERE UserPhone = ?");
         $stmt->bind_param("s",$phone);
         $stmt->execute(); 
         $result = $stmt->get_result()->fetch_assoc();
