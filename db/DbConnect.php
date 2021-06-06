@@ -1,5 +1,5 @@
 <?php 
-include ('../Config.php');
+include ('../db_config.php');
 class DbConnect
 {
     private $conn;
