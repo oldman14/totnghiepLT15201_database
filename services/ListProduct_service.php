@@ -1,5 +1,5 @@
 <?php
- require_once ('../db/DB_Connect.php');
+ require_once ('../db/DbConnect.php');
  require_once ('../entities/ListProduct.php');
 
  class ListProductService{
@@ -7,6 +7,7 @@
      function __construct()
      {
          $this->db=new DBConnect();
+         $this->conn = $this->db->connect();
      }
      function getAll_ListPro(){
          return $this->db->select('SELECT * FROM listproduct');
