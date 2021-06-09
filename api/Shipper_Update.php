@@ -1,5 +1,5 @@
 <?php
-include '../servcies/Shipper_service.php';
+include '../services/Shipper_service.php';
 $ShipID = $_POST['ShipID'];
 $Status = $_POST['Status'];
 $service =  new ShipperService();

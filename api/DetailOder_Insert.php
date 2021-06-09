@@ -1,5 +1,5 @@
 <?php
-include '../servcies/DetailOder_service.php';
+include '../services/DetailOder_service.php';
 $service = new DetailOderService();
 $service->db->connect();    
 $myArrays = array();

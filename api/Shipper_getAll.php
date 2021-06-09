@@ -1,5 +1,5 @@
 <?php
-include '../servcies/Shipper_service.php';
+include '../services/Shipper_service.php';
 $service = new ShipperService();
 $service->db->connect();
 $result = $service->getAll_shipper();

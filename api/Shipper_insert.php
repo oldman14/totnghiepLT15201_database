@@ -1,5 +1,5 @@
 <?php
-include '../servcies/Shipper_service.php';
+include '../services/Shipper_service.php';
 $service = new ShipperService();
 $service->db->connect();    
 // if (isset($_POST['ShipName']) && isset($_POST['ShipImage']) && isset($_POST['ShipPhone']) &&isset($_POST['ShipNumberCar'])&&isset($_POST['Status']))) {

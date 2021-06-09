@@ -1,5 +1,5 @@
 <?php
-include '../servcies/Oder_service.php';
+include '../services/Oder_service.php';
 $OderID = $_POST['OderID'];
 $Status = $_POST['Status'];
 $service =  new OderService();
