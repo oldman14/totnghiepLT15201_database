@@ -1,5 +1,5 @@
 <?php
-require_once ('../db/DB_Connect.php');
+require_once ('../db/DbConnect.php');
 
 require_once ('../entities/Users.php');
 
