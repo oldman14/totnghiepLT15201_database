@@ -14,7 +14,7 @@ class Notification
     }
 
     public function getAllTokens(){
-        $stmt = $this->conn->prepare("SELECT Token FROM user");
+        $stmt = $this->conn->prepare("SELECT Token FROM users");
         $stmt->execute(); 
         $result = $stmt->get_result();
         $tokens = array(); 
@@ -25,7 +25,7 @@ class Notification
     }
 
     public function getTokenByPhone($phone){
-        $stmt = $this->conn->prepare("SELECT Token FROM user WHERE UserPhone = ?");
+        $stmt = $this->conn->prepare("SELECT Token FROM users WHERE UserPhone = ?");
         $stmt->bind_param("s",$phone);
         $stmt->execute(); 
         $result = $stmt->get_result()->fetch_assoc();
