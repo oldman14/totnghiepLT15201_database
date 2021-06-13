@@ -12,5 +12,15 @@
      function getAll_ListPro(){
          return $this->db->select('SELECT * FROM listproduct');
      }
+
+
+
+     function getListProductOneStore($store){
+        return $this->db->select("SELECT *
+        FROM listproduct
+        INNER JOIN product
+        ON listproduct.ProductID = product.ProductID WHERE StoreID = '$store'");
+     }
+
     }
 ?>

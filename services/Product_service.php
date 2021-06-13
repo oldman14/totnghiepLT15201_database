@@ -15,19 +15,22 @@
     }
 
     function add_Product($productName,$productPrice,$productImage,$productNote,$typeID){
-        $insert=$this->db->query("INSERT INTO product(ProductName,ProductPrice,ProductImage,ProductNote,TypeID) VALUES ('$productName','$productPrice','$productImage','$productNote','$typeID')");
-        if($insert ==1){
-            $product = $this->getProductID($productName);
-            $productID =  implode(" ",$product);
-            $store = $this->db->select("SELECT StoreID FROM store");
-            for($i = 0; $i< count($store); $i++){
-                // echo json_encode(array_values($store[$i]));
-                $storeID =  implode(" ",array_values($store[$i]));
-                $this->addListProduct($productID,$storeID);
+        if(!$this->checkExist($productName)){
+            $insert=$this->db->query("INSERT INTO product(ProductName,ProductPrice,ProductImage,ProductNote,TypeID) VALUES ('$productName','$productPrice','$productImage','$productNote','$typeID')");
+            if($insert ==1){
+                $product = $this->getProductID($productName);
+                $productID =  implode(" ",$product);
+                $store = $this->db->select("SELECT StoreID FROM store");
+                for($i = 0; $i< count($store); $i++){
+                    // echo json_encode(array_values($store[$i]));
+                    $storeID =  implode(" ",array_values($store[$i]));
+                    $this->addListProduct($productID,$storeID);
+                }
+                return 1;
             }
-            return 1;
-        }
         return 0;
+        }
+        return 4;
     }
 
     function update_Product($productID,$productName,$productPrice,$productImage,$productNote,$typeID){
@@ -46,12 +49,15 @@
         return $this->db->query("INSERT INTO listproduct(ProductID, StoreID) VALUES ('$productID','$storeID')");
     }
 
-
-      
-
-
-
-
+    function checkExist($productName){
+        $stmt = $this->conn->prepare("SELECT ProductID FROM product WHERE ProductName = ?");
+        $stmt->bind_param("s",$productName);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_rows = $stmt->num_rows;
+        $stmt->close();
+        return $num_rows > 0;
+    }
  }
 
 ?>
