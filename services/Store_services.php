@@ -60,4 +60,34 @@ class StoreServices{
         $stmt->close();
         return $num_rows > 0;
     }
+
+    public function login($phone,$token){
+        if(!$this->isPhoneExist($phone)){
+            return 1; 
+        }else{
+            $stmt = $this->conn->prepare("UPDATE store SET Token = ? WHERE StorePhone = ?");
+            $stmt->bind_param("ss",$token,$phone);
+            if($stmt->execute())
+                return 2; 
+            return 3; 
+        }
+    }
+
+    private function isPhoneExist($phone){
+        $stmt = $this->conn->prepare("SELECT StoreID FROM store WHERE StorePhone = ?");
+        $stmt->bind_param("s",$phone);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_rows = $stmt->num_rows;
+        $stmt->close();
+        return $num_rows > 0;
+    }
+
+    public function getItemStore($phone){
+        $stmt = $this->conn->prepare("SELECT * FROM store WHERE StorePhone = ?");
+        $stmt->bind_param("s",$phone);
+        $stmt->execute(); 
+        $result = $stmt->get_result()->fetch_assoc();
+        return $result; 
+    }
 }
