@@ -1,22 +1,27 @@
 <?php
 include '../db/DbConnect.php';
-class OderService
+class OrderService
 {
 	public $db;
-	
+
 	function __construct(){
 		$this->db = new DbConnect();
+        $this->conn = $this->db->connect();
 	}
-	function getAll_oder(){
-		return $this->db->select("SELECT * FROM oder");
+	function getAllOrder($store, $status){
+		return $this->db->select("SELECT * FROM `order` INNER JOIN users
+        ON `order`.UserID = users.UserID WHERE StoreID = '$store' AND DATE(OrderDate) = DATE(NOW()) AND Status = '$status'  ORDER BY OrderDate");
 	}
-	function oder_insert($UserID, $StoreID, $ShipperID,$CouponID, $TotalMoney, $Note, $Status){
-		return $this->db->query("INSERT INTO oder (UserID, StoreID,ShipperID, CouponID, TotalMoney,Note, Status) VALUES('$UserID', '$StoreID', '$ShipperID','$CouponID', $TotalMoney,$Note, $Status)");
-	}	
-	function oder_update($OderID, $Status){
-		if ($this->db->query("UPDATE oder set Status='$Status' WHERE OderID='$OderID'")){
-			return $this->db->select("SELECT * from oder where OderID='$OderID'");
-		} else return null;
+	function order_insert($UserID, $StoreID, $ShipperID,$CouponID, $TotalMoney, $Note, $Status){
+		return $this->db->query("INSERT INTO `order` (UserID, StoreID,ShipperID, CouponID, TotalMoney,Note, Status) VALUES('$UserID', '$StoreID', '$ShipperID','$CouponID', $TotalMoney,$Note, $Status)");
 	}
+	function order_update($orderID, $Status,$shipID, $message){
+		return $this->db->query("UPDATE `order` set Status='$Status', Note = '$message', ShipID = '$shipID' WHERE orderID='$orderID'");
+	}
+
+	function order_update1($orderID, $Status, $message){
+		return $this->db->query("UPDATE `order` set Status='$Status', Note = '$message' WHERE orderID='$orderID'");
+	}
+
 }
 ?>

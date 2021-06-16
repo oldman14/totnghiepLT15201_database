@@ -1,6 +1,6 @@
 <?php
     include '../services/oder_service.php';
-    $service = new OderService();
+    $service = new OrderService();
     $service->db->connect();    
     if (isset($_POST['UserID']) && isset($_POST['StoreID']) && isset($_POST['ShipperID']) &&isset($_POST['CouponID'])&&isset($_POST['TotalMoney'])&&isset($_POST['Note'])&&isset($_POST['Status'])) {
         $UserID = $_POST['UserID'];
@@ -11,8 +11,8 @@
         $Note = $_POST['Note'];
         $Status = $_POST['Status'];
 
-        $result = $service->oder_insert($UserID, $StoreID, $ShipperID,$CouponID, $TotalMoney,$Note, $Status);
-        $response["oder"] = $result;
+        $result = $service->order_insert($UserID, $StoreID, $ShipperID,$CouponID, $TotalMoney,$Note, $Status);
+        $response["order"] = $result;
         echo json_encode($response);
     }   
     $service->db->close();

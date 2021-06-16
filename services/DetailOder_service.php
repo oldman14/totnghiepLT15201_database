@@ -1,6 +1,6 @@
 <?php 
 include '../db/DbConnect.php';
-class DetailOderService
+class DetailorderService
 {
     public $db;
 	
@@ -10,13 +10,19 @@ class DetailOderService
     function getAll_shipper(){
         return $this->db->select("SELECT * FROM shipper");
     }
-    function detailOder_insert($myArrays){
+    function detailorder_insert($myArrays){
         foreach ($myArrays as $myArray){
-            $oderID = $myArray['name'];
+            $orderID = $myArray['name'];
             $productID = $myArray['pass'];
-            $this->db->query("INSERT INTO detailoder (OderID, ProductID) VALUES ('$oderID','$productID') ");
+            $this->db->query("INSERT INTO detailorder (orderID, ProductID) VALUES ('$orderID','$productID') ");
         }
         return true;
+    }
+    function getByOrderID($orderID){
+        return $this->db->select("SELECT *  
+        FROM detailoder
+        INNER JOIN product
+        ON detailoder.ProductID = product.ProductID INNER JOIN typeproduct ON product.TypeID = typeproduct.TypeID WHERE OrderID = '$orderID'");   
     }
 }
 ?>

@@ -32,6 +32,13 @@ class Notification
         return array($result['Token']);        
     }
 
+    public function getTokenByPhoneShip($phone){
+        $stmt = $this->conn->prepare("SELECT Token FROM shipper WHERE ShipPhone = ?");
+        $stmt->bind_param("s",$phone);
+        $stmt->execute(); 
+        $result = $stmt->get_result()->fetch_assoc();
+        return array($result['Token']);        
+    }
     
     public function getTokenByPhoneFromStore($phone){
         $stmt = $this->conn->prepare("SELECT Token FROM store WHERE StorePhone = ?");

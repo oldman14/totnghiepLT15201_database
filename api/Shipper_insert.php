@@ -12,7 +12,7 @@ $service->db->connect();
     $Status = $_POST['Status'];
     $Token = $_POST['Token'];
     
-    // $sql = "INSERT INTO oder (UserID, StoreID,ShipperID, CouponID, TotalMoney, Status) VALUES('$UserID', '$StoreID', '$ShipperID','$CouponID', $TotalMoney, $Status)";
+    // $sql = "INSERT INTO order (UserID, StoreID,ShipperID, CouponID, TotalMoney, Status) VALUES('$UserID', '$StoreID', '$ShipperID','$CouponID', $TotalMoney, $Status)";
     // check if row inserted or not
 
     $result = $service->shipper_insert($ShipName, $ShipImage, $ShipPhone,$ShipNumberCar, $ShipLat, $ShipLong, $Status, $Token);

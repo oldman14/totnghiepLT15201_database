@@ -2,7 +2,8 @@
 include '../services/Shipper_service.php';
 $service = new ShipperService();
 $service->db->connect();
-$result = $service->getAll_shipper();
-echo json_encode(array("shipper"=>$result));
+$storeID = $_POST['storeID'];
+$result = $service->getAll_shipper($storeID);
+echo json_encode(array("Shipper"=>$result));
 $service->db->close();
 ?>

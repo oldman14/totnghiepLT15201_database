@@ -7,8 +7,8 @@ class ShipperService
 	function __construct(){
 		$this->db = new DbConnect();
 	}
-    function getAll_shipper(){
-        return $this->db->select("SELECT * FROM shipper");
+    function getAll_shipper($storeID){
+        return $this->db->select("SELECT * FROM shipper WHERE StoreID = '$storeID'");
     }
     function shipper_insert($ShipName, $ShipImage, $ShipPhone,$ShipNumberCar, $ShipLat, $ShipLong, $Status, $Token){
         return $this->db->query("INSERT INTO shipper (ShipName, ShipImage,ShipPhone, ShipNumberCar, ShipLat, ShipLong, Status, Token) VALUES ('$ShipName', '$ShipImage', '$ShipPhone','$ShipPhone', '$ShipLat','$ShipLong', '$Status', '$Token')");

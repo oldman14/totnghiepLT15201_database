@@ -1,6 +1,6 @@
 <?php
-include '../services/DetailOder_service.php';
-$service = new DetailOderService();
+include '../services/Detailoder_service.php';
+$service = new DetailorderService();
 $service->db->connect();    
 $myArrays = array();
 class Detail{
@@ -9,8 +9,8 @@ class Detail{
 }
 $myObject = new Detail();   
 $myArrays = $_POST['myArray'];
-$result = $service->detailOder_insert($myArrays);
-$response["DetailOder"] = $result;
+$result = $service->detailorder_insert($myArrays);
+$response["Detailorder"] = $result;
 echo json_encode($response);
 $service->db->close();
 ?>

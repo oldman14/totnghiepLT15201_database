@@ -32,7 +32,9 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 
 		$firebase = new Firebase(); 
 
-		echo $firebase->send($devicetoken, $mPushNotification);
+		$firebase->send($devicetoken, $mPushNotification);
+		$response['error']=false;
+		$response['message']='Send Success';
 	}else{
 		$response['error']=true;
 		$response['message']='Parameters missing';

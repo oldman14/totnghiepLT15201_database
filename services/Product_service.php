@@ -58,6 +58,7 @@
         $stmt->close();
         return $num_rows > 0;
     }
+
  }
 
 ?>
