@@ -12,6 +12,10 @@ class OrderService
 		return $this->db->select("SELECT * FROM `order` INNER JOIN users
         ON `order`.UserID = users.UserID WHERE StoreID = '$store' AND DATE(OrderDate) = DATE(NOW()) AND Status = '$status'  ORDER BY OrderDate");
 	}
+	function getAllOrder1($store){
+		return $this->db->select("SELECT * FROM `order` INNER JOIN users
+        ON `order`.UserID = users.UserID WHERE StoreID = '$store' AND DATE(OrderDate) = DATE(NOW())  ORDER BY OrderDate");
+	}
 	function order_insert($UserID, $StoreID, $ShipperID,$CouponID, $TotalMoney, $Note, $Status){
 		return $this->db->query("INSERT INTO `order` (UserID, StoreID,ShipperID, CouponID, TotalMoney,Note, Status) VALUES('$UserID', '$StoreID', '$ShipperID','$CouponID', $TotalMoney,$Note, $Status)");
 	}
