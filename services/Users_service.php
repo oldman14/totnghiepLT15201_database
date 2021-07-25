@@ -58,6 +58,23 @@ class UserService{
         $result = $stmt->get_result()->fetch_assoc();
         return $result; 
     }
+
+    public function getUserNames($phone){
+        $stmt = $this->conn->prepare("SELECT UserName,UserImage,UserID FROM users WHERE UserPhone = ?");
+        $stmt->bind_param("s",$phone);
+        $stmt->execute(); 
+        $result = $stmt->get_result()->fetch_assoc();
+        return $result; 
+    }
+
+
+    function getUserToOrder($userID){
+        $stmt = $this->conn->prepare("SELECT UserName,UserImage,UserPhone FROM users WHERE UserID = ?");
+        $stmt->bind_param("s",$userID);
+        $stmt->execute(); 
+        $result = $stmt->get_result()->fetch_assoc();
+        return $result; 
+	}
 }
 
 ?>
