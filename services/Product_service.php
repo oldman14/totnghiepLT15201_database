@@ -10,8 +10,18 @@
         $this->conn = $this->db->connect();
     }
 
-    function getAll_Product(){
-        return $this->db->select('SELECT * FROM product');
+    function getAll(){
+        $cart = array();
+        $productList = $this->db->select("SELECT * FROM product");
+        $productListID = $this->db->select("SELECT ProductID FROM product");
+        for($i = 0; $i< count($productListID); $i++){
+            $productID =  implode(" ",array_values($productListID[$i]));
+            $result = $this->getProduct($productID);
+            $item = $this->getSize($productID);
+            $result["sizes"]= $item;
+            array_push($cart,$result);
+        }
+        return $cart; 
     }
 
     function add_Product($productName,$productPrice,$productImage,$productNote,$typeID){
@@ -49,6 +59,7 @@
         return $this->db->query("INSERT INTO listproduct(ProductID, StoreID) VALUES ('$productID','$storeID')");
     }
 
+<<<<<<< HEAD
     function checkExist($productName){
         $stmt = $this->conn->prepare("SELECT ProductID FROM product WHERE ProductName = ?");
         $stmt->bind_param("s",$productName);
@@ -57,6 +68,23 @@
         $num_rows = $stmt->num_rows;
         $stmt->close();
         return $num_rows > 0;
+=======
+    function getProduct($productID){
+        $stmt = $this->conn->prepare("SELECT * FROM product WHERE ProductID = ?");
+        $stmt->bind_param("s",$productID);
+        $stmt->execute(); 
+        $result = $stmt->get_result()->fetch_assoc();
+        return $result;
+        // $sql= "SELECT * FROM product WHERE ProductID = '$productID'";
+        // $result = $this->conn->query($sql);
+        // $row =  $result->fetch_assoc();
+        // return  $row;
+
+
+    }
+    function getSize($productID){
+        return $this->db->select("SELECT * FROM size WHERE ProductID = '$productID'");
+>>>>>>> origin/tuyen2k1
     }
  }
 

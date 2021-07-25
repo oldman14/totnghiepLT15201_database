@@ -21,8 +21,8 @@ class UserService{
         return $this->db->query("INSERT INTO users(UserPhone,Token)  VALUES ('$userPhone','$token')");
     }
 
-    function update_User($userPhone,$userMail,$userBirthday,$userImage,$token){
-        return $this->db->query("UPDATE users SET UserMail='$userMail',UserBirthday='$userBirthday',UserImage='$userImage',Token='$token' WHERE UserPhone = $userPhone ");
+    function update_User($userPhone,$userName,$userMail,$userBirthday,$userImage){
+        return $this->db->query("UPDATE users SET UserName='$userName' ,UserMail='$userMail',UserBirthday='$userBirthday',UserImage='$userImage' WHERE UserPhone = $userPhone ");
     }
 
     public function loginRegisDevice($phone,$token){
@@ -58,6 +58,23 @@ class UserService{
         $result = $stmt->get_result()->fetch_assoc();
         return $result; 
     }
+
+    public function getUserNames($phone){
+        $stmt = $this->conn->prepare("SELECT UserName,UserImage,UserID FROM users WHERE UserPhone = ?");
+        $stmt->bind_param("s",$phone);
+        $stmt->execute(); 
+        $result = $stmt->get_result()->fetch_assoc();
+        return $result; 
+    }
+
+
+    function getUserToOrder($userID){
+        $stmt = $this->conn->prepare("SELECT UserName,UserImage,UserPhone FROM users WHERE UserID = ?");
+        $stmt->bind_param("s",$userID);
+        $stmt->execute(); 
+        $result = $stmt->get_result()->fetch_assoc();
+        return $result; 
+	}
 }
 
 ?>

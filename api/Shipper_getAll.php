@@ -1,8 +1,5 @@
 <?php
-include '../services/Shipper_service.php';
-$service = new ShipperService();
-$service->db->connect();
-$result = $service->getAll_shipper();
-echo json_encode(array("shipper"=>$result));
-$service->db->close();
+     require_once ('../services/Shipper_service.php');
+     $service =new ShipperService();
+     echo json_encode(array("shippers"=>$service->getAll_Shipper()));
 ?>

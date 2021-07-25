@@ -61,6 +61,7 @@ class StoreServices{
         return $num_rows > 0;
     }
 
+<<<<<<< HEAD
     public function login($phone,$token){
         if(!$this->isPhoneExist($phone)){
             return 1; 
@@ -86,8 +87,20 @@ class StoreServices{
     public function getItemStore($phone){
         $stmt = $this->conn->prepare("SELECT * FROM store WHERE StorePhone = ?");
         $stmt->bind_param("s",$phone);
+=======
+
+
+
+    public function getIFStore($storeID){
+        $stmt = $this->conn->prepare("SELECT * FROM store WHERE StoreID = ?");
+        $stmt->bind_param("s",$storeID);
+>>>>>>> origin/tuyen2k1
         $stmt->execute(); 
         $result = $stmt->get_result()->fetch_assoc();
         return $result; 
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/tuyen2k1
 }
