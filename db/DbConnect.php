@@ -20,7 +20,13 @@ class DbConnect
  
         return $this->conn;
     }
-
+	function prepare($sql){
+		$result = $this->conn->prepare($sql);
+		if ( $result=== FALSE) {
+			echo "Error: " . $sql . "<br>" . $this->conn->error;
+		} 
+		return $result;
+	}
     function query($sql){
 		$result = $this->conn->query($sql);
 		if ( $result=== FALSE) {

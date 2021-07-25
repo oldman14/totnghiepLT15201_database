@@ -18,5 +18,13 @@ class DetailOderService
         }
         return true;
     }
+
+
+    function getByOrderID($orderID){
+        return $this->db->select("SELECT *  
+        FROM detailoder
+        INNER JOIN product
+        ON detailoder.ProductID = product.ProductID INNER JOIN typeproduct ON product.TypeID = typeproduct.TypeID INNER JOIN size ON detailoder.SizeID = size.SizeID WHERE OrderID = '$orderID'");   
+    }
 }
 ?>

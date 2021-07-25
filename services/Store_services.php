@@ -60,4 +60,16 @@ class StoreServices{
         $stmt->close();
         return $num_rows > 0;
     }
+
+
+
+
+    public function getIFStore($storeID){
+        $stmt = $this->conn->prepare("SELECT * FROM store WHERE StoreID = ?");
+        $stmt->bind_param("s",$storeID);
+        $stmt->execute(); 
+        $result = $stmt->get_result()->fetch_assoc();
+        return $result; 
+    }
+
 }
