@@ -1,7 +1,7 @@
 <?php 
 	define('DB_USERNAME','root');
 	define('DB_PASSWORD','');
-	define('DB_NAME','fooddelivery');
+	define('DB_NAME','food');
 	define('DB_HOST','localhost');
 
 	//defined a new constant for firebase api key
