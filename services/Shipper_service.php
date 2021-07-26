@@ -13,9 +13,8 @@ class ShipperService{
 		$this->db = new DBConnect();
         $this->conn = $this->db->connect();
 	}
-    function getAll_Shipper(){
-         return $this->db->select('SELECT * FROM shipper');
-        
+    function getAll_shipper($storeID){
+        return $this->db->select("SELECT * FROM shipper WHERE StoreID = '$storeID'");
     }
     function add_Shipper($shipPhone,$token){
         return $this->db->query("INSERT INTO shipper(ShipPhone,Token)  VALUES ('$shipPhone','$token')");
@@ -25,6 +24,14 @@ class ShipperService{
         return $this->db->query("UPDATE shipper SET ShipName='$shipName' ,ShipNumberCar='$shipNumberCar',ShipLat='$shipLat',ShipImage='$shipImage',ShipLong='$shipLong',Status='$status',StoreID='$storeID' WHERE ShipPhone = $shipPhone ");
     }
 
+    function getShipper($ShipID){
+        $stmt = $this->conn->prepare("SELECT * FROM shipper WHERE ShipID = ?");
+        $stmt->bind_param("s",$ShipID);
+        $stmt->execute(); 
+        $result = $stmt->get_result()->fetch_assoc();
+        return $result; 
+    }
+    
     public function loginRegisDevice($phone,$token){
         if(!$this->isPhoneExist($phone)){
             $stmt = $this->conn->prepare("INSERT INTO shipper (ShipPhone, Token,ShipImage) VALUES (?,?,'https://assets.webiconspng.com/uploads/2017/09/Avatar-PNG-Image-87443.png')");

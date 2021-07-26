@@ -9,7 +9,7 @@ $db = new Notification();
 $response = array(); 
 
 if($_SERVER['REQUEST_METHOD']=='POST'){	
-	if(isset($_POST['title']) and isset($_POST['message']) and isset($_POST['phone'])){
+	if(isset($_POST['title']) and isset($_POST['message']) and isset($_POST['phone']))){
 
 		$push = null; 
 		if(isset($_POST['image'])){
@@ -32,7 +32,8 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 
 		$firebase = new Firebase(); 
 
-		echo $firebase->send($devicetoken, $mPushNotification);
+		$response['error']=false;
+		$response['message']='Send Success';
 	}else{
 		$response['error']=true;
 		$response['message']='Parameters missing';

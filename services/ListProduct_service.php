@@ -14,13 +14,20 @@
      }
 
 
-
      function getListProductOneStore($store){
         return $this->db->select("SELECT *
         FROM listproduct
         INNER JOIN product
         ON listproduct.ProductID = product.ProductID WHERE StoreID = '$store'");
      }
+     
+     function getAllType(){
+        return $this->db->select("SELECT * FROM typeproduct");
+    }
+
+    function changeStatus($storeID,$productID,$status){
+        return $this->db->query("UPDATE listproduct SET Status='$status' WHERE StoreID= '$storeID' AND ProductID = '$productID'");
+    }
 
     }
 ?>

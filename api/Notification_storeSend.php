@@ -9,7 +9,7 @@ $db = new Notification();
 $response = array(); 
 
 if($_SERVER['REQUEST_METHOD']=='POST'){	
-	if(isset($_POST['title']) and isset($_POST['message']) and isset($_POST['phone'])){
+	if(isset($_POST['title']) and isset($_POST['message']) and isset($_POST['phone'])and isset($_POST['object'])){
 
 		$push = null; 
 		if(isset($_POST['image'])){
@@ -28,11 +28,17 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 
 		$mPushNotification = $push->getPush(); 
 
-		$devicetoken = $db->getTokenByPhone($_POST['phone']);
+		if ($_POST['object'] == 0){
+			$devicetoken = $db->getTokenByPhone($_POST['phone']);
+		}else{
+			$devicetoken = $db->getTokenByPhoneShip($_POST['phone']);
+		}
 
 		$firebase = new Firebase(); 
 
-		echo $firebase->send($devicetoken, $mPushNotification);
+		$firebase->send($devicetoken, $mPushNotification);
+		$response['error']=false;
+		$response['message']='Send Success';
 	}else{
 		$response['error']=true;
 		$response['message']='Parameters missing';
