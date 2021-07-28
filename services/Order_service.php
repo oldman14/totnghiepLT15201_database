@@ -61,14 +61,15 @@ class OrderService
 	function insertOderDetail($listItems){
 		$detailOrder = $listItems['detailOrder'];
 		$sql = ("INSERT INTO detailoder (OrderID, ProductID, Quantity, SizeID, Amount) VALUES (?,?,?,?,?)");
-		$sqlOrder = ("INSERT INTO orderfood (OrderID, StoreID, Address, OrderLat, OrderLong, TotalMoney) VAlUES (?,?,?,?,?,?)");
+		$sqlOrder = ("INSERT INTO orderfood (UserID,OrderID, StoreID, Address, OrderLat, OrderLong, TotalMoney) VAlUES (?,?,?,?,?,?,?)");
+		$UserID = $listItems['userID'];
 		$OrderID = $listItems['orderID'];
 		$StoreID = $listItems['storeID'];
 		$Address =  $listItems['address'];
 		$Lat = $listItems['lat'];
 		$Lng = $listItems['lng'];
 		$TotalMoney = $listItems['totalMoney'];
-		$resultOrder = $this->db->query("INSERT INTO orderfood (OrderID, StoreID, Address, OrderLat, OrderLong, TotalMoney) VALUES('$OrderID', '$StoreID', '$Address','$Lat', '$Lng', '$TotalMoney')");
+		$resultOrder = $this->db->query("INSERT INTO orderfood (UserID,OrderID, StoreID, Address, OrderLat, OrderLong, TotalMoney) VALUES('$UserID','$OrderID', '$StoreID', '$Address','$Lat', '$Lng', '$TotalMoney')");
 		if($resultOrder){
 			$resultOrder1 = $this->db->select("SELECT * FROM orderfood WHERE OrderID = '$OrderID'");
 		} else {
@@ -86,6 +87,14 @@ class OrderService
 		} 
 	}
 		return $result;
+	}
+
+	function getNewID(){
+		$numberFirst = $this->db->select("SELECT ID FROM OrderID");
+		$ID =  implode(" ",array_values($numberFirst[0]));
+		$NewID = $ID +1;
+		$this->db->query("UPDATE OrderID SET ID = '$NewID'");
+		return $ID;
 	}
 }
 	

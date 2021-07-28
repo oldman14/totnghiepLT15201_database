@@ -21,7 +21,7 @@ class StoreServices{
 
     function insert($storeName, $storeAddress, $storePhone, $storeLat, $storeLong, $storeImage,$token){
         if(!$this->checkStore($storeName,$storeAddress)){
-            $insert = $this->db->query("INSERT INTO store (StoreName,StoreAddress,StorePhone,StoreLat,StoreLong,StoreImage,Token) VALUES ('$storeName', '$storeAddress', '$storePhone', '$storeLat', '$storeLong',' $storeImage','$token') ");
+            $insert = $this->db->query("INSERT INTO store (StoreName,StoreAddress,StorePhone,StoreLat,StoreLng,StoreImage,Token) VALUES ('$storeName', '$storeAddress', '$storePhone', '$storeLat', '$storeLong',' $storeImage','$token') ");
             if($insert ==1){
                 $store = $this->getStoreID($storeName, $storePhone);
                 $storeID =  implode(" ",$store);
