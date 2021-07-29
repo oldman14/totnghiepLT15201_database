@@ -99,4 +99,13 @@ class StoreServices{
         return $result; 
     }
 
+    function addAllStore($arrayStore){
+        $arrayMain = json_decode($arrayStore);
+        for($i = 0; $i< count($arrayMain); $i++){
+            $arrayChild = $arrayMain[$i];
+            $this->insert($arrayChild[0],$arrayChild[1],$i,$arrayChild[2],$arrayChild[3],$arrayChild[4],"");
+        }
+        return 0;
+    }
+
 }

@@ -4,4 +4,4 @@ $service = new DetailOderService();
 $service->db->connect();    
 $orderID = $_POST['OrderID'];
 echo json_encode(array("DetailOrder"=>$service->getByOrderID($orderID)));
-?>
+?>  
