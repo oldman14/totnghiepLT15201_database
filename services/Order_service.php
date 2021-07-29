@@ -96,6 +96,32 @@ class OrderService
 		$this->db->query("UPDATE OrderID SET ID = '$NewID'");
 		return $ID;
 	}
+
+	function count($storeID){
+		$stmt = $this->conn->prepare("SELECT count(*) as total from orderfood WHERE StoreID = ? AND Status = 'Đang đợi xác nhận' AND DATE(OrderDate) = DATE(NOW())");
+		$stmt->bind_param("s",$storeID);
+        $stmt->execute(); 
+        $result = $stmt->get_result()->fetch_assoc();
+        return $result['total'];  
+	}
+
+	function TotalYear($storeID){
+		return $this->db->select("SELECT year(OrderDate) as Year,Month(OrderDate) as Month,sum(TotalMoney)  as Total
+		from orderfood WHERE StoreID = '$storeID' AND Status = 'Giao hàng thành công'
+		group by year(OrderDate),month(OrderDate)
+		");
+	}
+
+	function TotalDay($storeID){
+		$stmt = $this->conn->prepare("SELECT sum(TotalMoney) as total from orderfood WHERE StoreID = ? AND Status = 'Giao hàng thành công'  AND DATE(OrderDate) = DATE(NOW()) ");
+		$stmt->bind_param("s",$storeID);
+        $stmt->execute(); 
+        $result = $stmt->get_result()->fetch_assoc();
+        if(!$result['total']){
+			return 0;
+		}
+		return $result['total'];  
+	}
 }
 	
 ?>
