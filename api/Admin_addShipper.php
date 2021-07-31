@@ -6,5 +6,10 @@ $shipImage = $_POST['shipImage'];
 $shipPhone = $_POST['shipPhone'];
 $shipNumberCar = $_POST['shipNumberCar'];
 $storeID = $_POST['storeID'];
-echo $services->insert($shipName,$shipImage,$shipPhone,$shipNumberCar,$storeID);
+$result =  $services->insert($shipName,$shipImage,$shipPhone,$shipNumberCar,$storeID);
+if($result==1){
+    echo 1;
+}else{
+    echo -1;
+}
 ?>
