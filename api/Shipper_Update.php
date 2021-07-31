@@ -6,5 +6,5 @@
  $shipNumberCar =$_POST['ShipNumberCar'];
  $shipImage=$_POST['ShipImage'];
  $storeID=$_POST['StoreID'];
- echo $service->update_Shipper($shipName,$ShipPhone,$shipNumberCar,$ShipImage,$storeID);
+ echo $service->update_Shipper($shipName,$shipPhone,$shipNumberCar,$shipImage,$storeID);
 ?>

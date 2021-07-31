@@ -26,12 +26,16 @@ class ShipperService{
     }
 
     function insert($shipName,$shipImage,$shipPhone,$shipNumberCar,$storeID){
+        if($this->isPhoneExist($shipPhone)){
+            return -1;   
+        }
         return $this->db->query("INSERT INTO shipper(ShipName,ShipImage,ShipPhone,ShipNumberCar,StoreID)  VALUES ('$shipName','$shipImage','$shipPhone','$shipNumberCar','$storeID')");
     }
 
-    function update_Shipper($shipName,$ShipPhone,$shipNumberCar,$ShipImage,$storeID){
+    function update_Shipper($shipName,$shipPhone,$shipNumberCar,$shipImage,$storeID){
         return $this->db->query("UPDATE shipper SET ShipName='$shipName' ,ShipNumberCar='$shipNumberCar',ShipImage='$shipImage',StoreID='$storeID' WHERE ShipPhone = $shipPhone ");
     }
+    
 
     function getShipper($ShipID){
         $stmt = $this->conn->prepare("SELECT * FROM shipper WHERE ShipID = ?");
