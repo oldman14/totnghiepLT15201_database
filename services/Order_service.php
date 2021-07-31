@@ -46,7 +46,7 @@ class OrderService
 	}
 	
 	function getItemOrder($shipID){
-		return $this->db->select("SELECT * FROM orderfood WHERE ShipID ='$shipID'"); 
+		return $this->db->select("SELECT * FROM orderfood WHERE ShipID ='$shipID' AND DATE(OrderDate) = DATE(NOW()) AND Status = 'Đợi tài xế lấy hàng' OR Status = 'Đang Giao' AND DATE(OrderDate) = DATE(NOW())"); 
 	}
 	function updateStatus($orderID,$status){
 		return $this->db->query("UPDATE  orderfood SET Status='$status' WHERE OrderID ='$orderID'"); 

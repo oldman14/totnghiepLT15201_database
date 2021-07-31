@@ -16,12 +16,21 @@ class ShipperService{
     function getAll_shipper($storeID){
         return $this->db->select("SELECT * FROM shipper WHERE StoreID = '$storeID'");
     }
+
+    function getAll(){
+        return $this->db->select("SELECT * FROM shipper");
+    }
+
     function add_Shipper($shipPhone,$token){
         return $this->db->query("INSERT INTO shipper(ShipPhone,Token)  VALUES ('$shipPhone','$token')");
     }
 
-    function update_Shipper($shipPhone,$storeID,$shipName,$shipNumberCar,$shipLat,$shipImage,$shipLong,$status){
-        return $this->db->query("UPDATE shipper SET ShipName='$shipName' ,ShipNumberCar='$shipNumberCar',ShipLat='$shipLat',ShipImage='$shipImage',ShipLong='$shipLong',Status='$status',StoreID='$storeID' WHERE ShipPhone = $shipPhone ");
+    function insert($shipName,$shipImage,$shipPhone,$shipNumberCar,$storeID){
+        return $this->db->query("INSERT INTO shipper(ShipName,ShipImage,ShipPhone,ShipNumberCar,StoreID)  VALUES ('$shipName','$shipImage','$shipPhone','$shipNumberCar','$storeID')");
+    }
+
+    function update_Shipper($shipName,$ShipPhone,$shipNumberCar,$ShipImage,$storeID){
+        return $this->db->query("UPDATE shipper SET ShipName='$shipName' ,ShipNumberCar='$shipNumberCar',ShipImage='$shipImage',StoreID='$storeID' WHERE ShipPhone = $shipPhone ");
     }
 
     function getShipper($ShipID){
@@ -67,7 +76,7 @@ class ShipperService{
     }
 
     public function getShipperName($phone){
-        $stmt = $this->conn->prepare("SELECT ShipName,ShipImage,ShipID,ShipLat,ShipLong,Status FROM shipper WHERE ShipPhone = ?");
+        $stmt = $this->conn->prepare("SELECT * FROM shipper WHERE ShipPhone = ?");
         $stmt->bind_param("s",$phone);
         $stmt->execute(); 
         $result = $stmt->get_result()->fetch_assoc();
