@@ -15,7 +15,7 @@ class StoreServices{
     }
 
     function update($storeID,$storeName, $storeAddress, $storePhone, $storeLat, $storeLong, $storeImage,$token){
-        return $this->db->query("UPDATE store SET StoreName = '$storeName',StoreAddress= '$storeAddress', StorePhone ='$storePhone', StoreLat = '$storeLat', StoreLong = '$storeLong', StoreImage = '$storeImage', Token = '$token' WHERE StoreID = '$storeID'");
+        return $this->db->query("UPDATE store SET StoreName = '$storeName',StoreAddress= '$storeAddress', StorePhone ='$storePhone', StoreLat = '$storeLat', StoreLng = '$storeLong', StoreImage = '$storeImage', Token = '$token' WHERE StoreID = '$storeID'");
         
     }
 

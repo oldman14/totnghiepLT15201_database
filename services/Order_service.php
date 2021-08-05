@@ -128,6 +128,14 @@ class OrderService
 		}
 		return $result['total'];  
 	}
+
+	function ThongKeAll($year){
+		return $this->db->select("SELECT year(OrderDate) as Year, Month(OrderDate) as Month ,sum(TotalMoney) as total from orderfood WHERE Status = 'Giao hàng thành công' AND  year(OrderDate) >'$year' group by year(OrderDate),month(OrderDate)");
+	}
+
+	function ThongKeAll1Store($year, $storeID){
+		return $this->db->select("SELECT year(OrderDate) as Year, Month(OrderDate) as Month ,sum(TotalMoney) as total from orderfood WHERE Status = 'Giao hàng thành công' AND StoreID = '$storeID' AND  year(OrderDate) >'$year' group by year(OrderDate),month(OrderDate)");
+	}
 }
 	
 ?>
